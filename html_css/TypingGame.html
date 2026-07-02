@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Typing Game | Soichiro's Portfolio</title>
+  <link rel="icon" href="../img/peco.png">
+
+  <link rel="stylesheet" href="https://unpkg.com/ress@5.0.2/dist/ress.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+  <link href="TypingGame.css" rel="stylesheet">
+</head>
+
+<body>
+  <main class="typing-main">
+
+    <!-- ============ Screen 1: Start ============ -->
+    <div id="start-screen" class="screen">
+      <div class="title-block">
+        <p class="subtitle-top">— PROJECT 03 —</p>
+        <h1 class="game-title">TYPING</h1>
+        <p class="origin">
+          Originally written in <span class="lang-tag">Java</span>
+          Ported to <span class="lang-tag">TypeScript</span>
+        </p>
+        <p class="origin origin-note">Works only for laptop, sorry</p>
+      </div>
+
+      <div class="start-card">
+        <p class="instruction">SELECT TIME LIMIT</p>
+
+        <label class="time-limit">
+          <select id="time-select">
+            <option value="30">30 sec</option>
+            <option value="60">60 sec</option>
+          </select>
+        </label>
+
+        <button id="start-btn" class="btn primary"><span>START</span></button>
+        <a href="works.html" class="back-link">&larr; BACK TO WORKS</a>
+      </div>
+    </div>
+
+    <!-- ============ Screen 2: Game ============ -->
+    <div id="game-screen" class="screen hidden">
+      <div class="game-info">
+        <div class="info-block">
+          <span class="info-label">SCORE</span>
+          <span id="score" class="info-value">0</span>
+        </div>
+        <div class="info-block center">
+          <span class="info-label">BEST</span>
+          <span id="best-score" class="info-value">0</span>
+        </div>
+        <div class="info-block right">
+          <span class="info-label">TIME</span>
+          <span id="timer" class="info-value">30</span>
+        </div>
+      </div>
+
+      <div class="play-area">
+        <p id="bonus-msg" class="bonus-msg">&nbsp;</p>
+        <p id="word" class="word">&mdash;</p>
+        <input id="input" type="text" class="type-input" autocomplete="off"
+               spellcheck="false" placeholder="type here">
+      </div>
+
+      <p class="touch-hint">press ENTER to submit each word</p>
+
+      <button id="game-quit-btn" class="btn secondary game-quit"><span>QUIT</span></button>
+    </div>
+
+    <!-- ============ Screen 3: Result ============ -->
+    <div id="result-screen" class="screen hidden">
+      <div class="result-block">
+        <p class="result-eyebrow">— RESULT —</p>
+        <h2 class="result-title">GAME OVER</h2>
+        <p id="new-record" class="new-record hidden">NEW RECORD!</p>
+      </div>
+
+      <div class="result-stats">
+        <div class="stat">
+          <span class="stat-label">YOUR SCORE</span>
+          <span id="final-score" class="stat-value">0</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-label">BEST</span>
+          <span id="final-best" class="stat-value">0</span>
+        </div>
+      </div>
+
+      <div class="result-buttons">
+        <button id="restart-btn" class="btn primary"><span>RESTART</span></button>
+        <button id="quit-btn" class="btn secondary"><span>QUIT</span></button>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="../ts/Words.js"></script>
+  <script src="../ts/TypingGame.js"></script>
+</body>
+</html>

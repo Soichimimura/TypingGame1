@@ -1,0 +1,556 @@
+@charset "UTF-8";
+
+:root {
+  --bg: #1E006D;
+  --bg-deep: #15004f;
+  --accent: #fff200;
+  --accent-soft: rgba(255, 242, 0, 0.65);
+  --accent-line: rgba(255, 242, 0, 0.22);
+  --accent-faint: rgba(255, 242, 0, 0.08);
+  --field-bg: rgba(71, 47, 145, 0.55);
+  --field-bg-deep: rgba(40, 15, 95, 0.6);
+  --danger: #ff6b6b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--accent);
+  font-family: "Roboto", system-ui, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Grid background (matches Snake / Matrix pages) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 242, 0, 0.43) 0 1px,
+    transparent 1px 54px
+  );
+  opacity: 0.35;
+}
+
+.typing-main {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 120px);
+  padding: 1rem;
+  animation: fadeIn 0.6s ease;
+}
+
+.hidden { display: none !important; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============ Title block ============ */
+.title-block {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.subtitle-top {
+  font-size: 0.9rem;
+  letter-spacing: 0.5em;
+  margin-bottom: 1rem;
+  opacity: 0.7;
+  font-weight: 700;
+}
+
+.game-title {
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(3rem, 10vw, 7rem);
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-shadow:
+    0 0 20px rgba(255, 242, 0, 0.5),
+    0 0 40px rgba(255, 242, 0, 0.3),
+    4px 4px 0 rgba(0, 0, 0, 0.4);
+  margin: 0.5rem 0 1.5rem;
+}
+
+.origin {
+  font-size: 0.95rem;
+  letter-spacing: 0.15em;
+  opacity: 0.85;
+  white-space: nowrap;
+}
+
+.origin-note {
+  margin-top: 0.6rem;
+}
+
+.lang-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  background: rgba(255, 242, 0, 0.15);
+  border: 1px solid var(--accent-line);
+  border-radius: 4px;
+  font-weight: 700;
+  margin: 0 4px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.7rem;
+}
+
+.instruction {
+  font-size: 1rem;
+  letter-spacing: 0.4em;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+.instruction::before,
+.instruction::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 1px;
+  background: var(--accent);
+}
+.instruction::before { right: calc(100% + 16px); }
+.instruction::after  { left: calc(100% + 16px); }
+
+/* ============ Login card ============ */
+.login-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 420px;
+  padding: 2.5rem 2rem;
+  background: var(--field-bg-deep);
+  border: 2px solid var(--accent-line);
+  border-radius: 16px;
+  position: relative;
+}
+.login-card::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: 1.5rem; right: 1.5rem;
+  height: 2px;
+  background: var(--accent);
+  opacity: 0.7;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.field-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+.field input {
+  height: 46px;
+  background: var(--field-bg);
+  border: 1.5px solid var(--accent-line);
+  border-radius: 6px;
+  color: var(--accent);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 0 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.field input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(255, 242, 0, 0.08);
+  box-shadow: 0 0 0 3px rgba(255, 242, 0, 0.15);
+}
+
+.login-status {
+  min-height: 1.2em;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.9rem;
+  color: #fff;
+  letter-spacing: 0.05em;
+}
+
+.login-hint {
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  opacity: 0.55;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  color: var(--accent);
+  font-size: 0.9rem;
+  letter-spacing: 0.25em;
+  font-weight: 700;
+  border: 2px solid var(--accent-line);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+.back-link:hover {
+  color: var(--bg);
+  background: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 242, 0, 0.3);
+}
+
+/* ============ Game screen ============ */
+#game-screen { justify-content: flex-start; padding-top: 2rem; }
+
+.game-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 640px;
+  margin-bottom: 2rem;
+  padding: 1rem 1.5rem;
+  background: var(--field-bg-deep);
+  border: 2px solid var(--accent-line);
+  border-radius: 14px;
+}
+
+.info-block { display: flex; flex-direction: column; gap: 4px; }
+.info-block.center { align-items: center; }
+.info-block.right  { align-items: flex-end; }
+
+.info-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  opacity: 0.7;
+  font-weight: 700;
+}
+
+.info-value {
+  font-family: "Press Start 2P", monospace;
+  font-size: 1.3rem;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+.info-value.small { font-size: 0.9rem; }
+
+.play-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 640px;
+  min-height: 220px;
+  padding: 2.5rem 1.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px dashed var(--accent-faint);
+  border-radius: 14px;
+}
+
+.bonus-msg {
+  min-height: 1.3em;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(255, 242, 0, 0.5);
+  text-align: center;
+  animation: pulseResult 1.6s ease infinite;
+}
+
+.word {
+  font-family: "JetBrains Mono", monospace;
+  font-size: clamp(2.4rem, 9vw, 4rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
+  text-align: center;
+  word-break: break-all;
+}
+
+.type-input {
+  width: 100%;
+  max-width: 360px;
+  height: 56px;
+  background: var(--field-bg);
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  color: var(--accent);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+  transition: box-shadow 0.2s ease, opacity 0.2s ease;
+}
+.type-input::placeholder { color: var(--accent-soft); opacity: 0.4; font-size: 1rem; }
+.type-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 242, 0, 0.18), 0 0 25px rgba(255, 242, 0, 0.2);
+}
+.type-input:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.game-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.time-limit { display: flex; flex-direction: column; gap: 8px; }
+
+.time-limit select {
+  width: 110px;
+  height: 48px;
+  background: var(--field-bg);
+  border: 1.5px solid var(--accent-line);
+  border-radius: 8px;
+  color: var(--accent);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 0 28px 0 10px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff200'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.time-limit select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 242, 0, 0.15);
+}
+.time-limit select option { background: var(--bg-deep); color: var(--accent); }
+
+.touch-hint {
+  margin-top: 1.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  opacity: 0.55;
+  font-weight: 700;
+}
+
+/* ============ Result screen ============ */
+.result-block { text-align: center; margin-bottom: 2.5rem; }
+
+.result-eyebrow {
+  font-size: 0.85rem;
+  letter-spacing: 0.5em;
+  opacity: 0.7;
+  margin-bottom: 1rem;
+}
+
+.result-title {
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(2rem, 7vw, 4rem);
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 20px rgba(255, 242, 0, 0.5);
+  animation: pulseResult 2s ease infinite;
+}
+
+@keyframes pulseResult {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.result-stats {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1.8rem 3rem;
+  border: 2px solid var(--accent-line);
+  border-radius: 12px;
+  background: rgba(255, 242, 0, 0.05);
+}
+
+.stat { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+.stat-label { font-size: 0.7rem; letter-spacing: 0.3em; opacity: 0.7; font-weight: 700; }
+.stat-value { font-family: "Press Start 2P", monospace; font-size: 2.5rem; color: #fff; }
+
+.leaderboard-wrap {
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: 2.5rem;
+}
+
+.lb-title {
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-align: center;
+  margin-bottom: 1rem;
+  opacity: 0.85;
+}
+
+.leaderboard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lb-row {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.2rem;
+  background: var(--field-bg-deep);
+  border: 1.5px solid var(--accent-line);
+  border-radius: 8px;
+  font-family: "JetBrains Mono", monospace;
+}
+.lb-row:first-child { border-color: var(--accent); box-shadow: 0 0 18px rgba(255, 242, 0, 0.15); }
+
+.lb-rank { font-family: "Press Start 2P", monospace; font-size: 0.9rem; opacity: 0.7; }
+.lb-name { font-weight: 700; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lb-score { font-weight: 700; color: var(--accent); }
+
+.result-buttons { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+
+/* ============ Shared buttons (matches Snake) ============ */
+.btn {
+  min-width: 180px;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background: transparent;
+  color: var(--accent);
+  border: 3px solid var(--accent);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: translateX(-101%);
+  transition: transform 0.3s ease;
+  z-index: 0;
+}
+.btn:hover::before { transform: translateX(0); }
+.btn:hover {
+  color: var(--bg);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(255, 242, 0, 0.2);
+}
+.btn > * { position: relative; z-index: 1; }
+.btn.secondary { border-color: var(--accent-soft); }
+
+/* ============ Responsive ============ */
+@media (max-width: 600px) {
+  body::before { inset: 160px 0 0 0; }
+  .game-title { font-size: clamp(2.2rem, 14vw, 4rem); }
+
+  .game-info {
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-around;
+  }
+  .info-block, .info-block.center, .info-block.right { align-items: center; }
+
+  .game-controls { flex-direction: column; align-items: stretch; width: 100%; max-width: 320px; }
+  .time-limit select { width: 100%; }
+  .btn { width: 100%; min-width: 0; }
+
+  .result-buttons { flex-direction: column; width: 100%; max-width: 300px; }
+  .result-stats { padding: 1.5rem; }
+}
+
+/* ============ Start card (replaces login card) ============ */
+.start-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+  width: 100%;
+  max-width: 420px;
+  padding: 2.5rem 2rem;
+  background: var(--field-bg-deep);
+  border: 2px solid var(--accent-line);
+  border-radius: 16px;
+  position: relative;
+}
+.start-card::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: 1.5rem; right: 1.5rem;
+  height: 2px;
+  background: var(--accent);
+  opacity: 0.7;
+}
+.start-card .time-limit { align-items: center; width: 100%; }
+.start-card .time-limit select { width: 160px; height: 52px; font-size: 1.05rem; }
+.start-card .btn { width: 100%; }
+
+/* ============ Result: NEW RECORD + divider ============ */
+.new-record {
+  margin-top: 1.2rem;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.95rem;
+  color: #fff;
+  letter-spacing: 0.2em;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+  animation: blinkRecord 0.8s ease infinite;
+}
+@keyframes blinkRecord {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.8; }
+}
+
+.result-stats { gap: 3rem; }
+.stat-divider { width: 1px; height: 60px; background: var(--accent-line); }
+
+@media (max-width: 600px) {
+  .origin { font-size: 0.75rem; }
+  .result-stats { flex-direction: column; gap: 1.5rem; }
+  .stat-divider { width: 60px; height: 1px; }
+}
+
+/* In-game QUIT button */
+.game-quit {
+  margin-top: 1.5rem;
+  min-width: 160px;
+  padding: 0.8rem 1.8rem;
+  font-size: 0.8rem;
+}
